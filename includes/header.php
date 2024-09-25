@@ -63,7 +63,7 @@ $page = $page - 1;
             <!-- mid header -->
             <div class="bg-main">
                 <div class="mid-header container">
-                    <a href="index.php" class="logo">COSSOFT</a>
+                    <a href="index.php" class="logo">COSSOFTs</a>
                     <?php if (!isset($type_post)) { ?>
                         <form class="search" method="get" action="./products.php">
                     <?php } else { ?>
