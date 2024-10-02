@@ -1,7 +1,7 @@
+
 <?php 
 include("./includes/header.php");
 ?>
-<script src="../assets/js/boostrap.bundle.js"></script>
 
 <div class="py-5">
     <div class="container">
@@ -44,7 +44,7 @@ include("./includes/header.php");
      </div>
     </div> 
 </div>
-
+<script src="../assets/js/boostrap.bundle.js"></script>
 <script>
     const validateEmail = (email) => {
     return String(email)
