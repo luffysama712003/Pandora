@@ -52,12 +52,12 @@ include ("../admin/includes/header.php");
                                 <div class="col-md-6">
                                 <br>
                                     <label class="mb-0"><b>Giá ban đầu</b></label>
-                                    <input type="text" required name="original_price" placeholder="Nhập giá" class="form-control mb-2"> 
+                                    <input type="number" required name="original_price" placeholder="Nhập giá" class="form-control mb-2"> 
                                 </div>                               
                                 <div class="col-md-6">
                                 <br>
                                     <label class="mb-0"><b>Giảm giá</b></label>
-                                    <input type="text" required name="selling_price" placeholder="Nhập tiền đã giảm" class="form-control mb-2">
+                                    <input type="number" name="selling_price" placeholder="Nhập tiền đã giảm" class="form-control mb-2">
                                 </div>                              
                                 <div class="col-md-12">
                                 <br>

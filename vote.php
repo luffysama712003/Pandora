@@ -79,7 +79,7 @@ $id = $_GET['id']
                     </div>
                     <br>
                     <div class="comment">
-                        <button class="btn-vote">
+                        <button class="btn-vote" type="submit">
                             Đánh giá
                         </button>
                     </div>

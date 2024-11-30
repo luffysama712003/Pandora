@@ -69,22 +69,6 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
             <span class="nav-link-text ms-1">Thêm sản phẩm</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white <?= $page== "add-blog.php"? 'active bg-gradient-primary':'' ?>" href="add-blog.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">edit</i>
-            </div>
-            <span class="nav-link-text ms-1">Thêm bài viết</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white <?= $page== "blog.php"? 'active bg-gradient-primary':'' ?>" href="blog.php">
-            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">receipt_long</i>
-            </div>
-            <span class="nav-link-text ms-1">Tất cả bài viết</span>
-          </a>
-        </li>
       </ul>
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">

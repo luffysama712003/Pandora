@@ -1,6 +1,12 @@
 <?php 
 include ("../admin/includes/header.php");
+$type = -1;
+if(isset($_GET['type'])){
+    $type = $_GET['type'];
+}
+$products=getProducts($type);
 ?>
+
 <body>
 <div class="container-fluid">
     <div class="row">
@@ -10,6 +16,13 @@ include ("../admin/includes/header.php");
                     <h4>Sản phẩm</h4>
                 </div>
                 <div class="card-body">
+                    <div class="list-choose mb-3">
+                    <a href='./products.php' style="margin-left: 20px"><span class="badge badge-sm bg-gradient-secondary">Tất cả</span></a>
+                            <a href='./products.php?type=3' style="margin-left: 20px"><span class="badge badge-sm bg-gradient-primary">Hết hàng</span></a>
+                            <a href='./products.php?type=2' style="margin-left: 20px"><span class='badge badge-sm bg-gradient-info'>Sắp hết</span></a>
+                            <a href='./products.php?type=1' style="margin-left: 20px"><span class="badge badge-sm bg-gradient-success">Còn hàng</span></a>
+                    </div>
+                           
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -19,12 +32,11 @@ include ("../admin/includes/header.php");
                                 <th>Trạng thái</th>
                                 <th>Sửa</th>
                                 <th>Xóa</th>
+                                <th>Trong kho</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                $products= getAll("products");
-
                                 if(mysqli_num_rows($products) >0)
                                 {
                                     foreach($products as $item)
@@ -44,9 +56,22 @@ include ("../admin/includes/header.php");
                                             <td>
                                                 <form action="code.php" method="POST">
                                                     <input type="hidden" name="product_id" value="<?= $item['id']; ?>">
-                                                    <button type="submit" name="delete_product_btn" class="btn btn-danger">Xóa  </button>
+                                                    <button type="submit" name="delete_product_btn" class="btn btn-danger">Xóa</button>
                                                 </form>   
-                                            </td>                      
+                                            </td>  
+                                            <td class="text-center">
+                                                <?php
+                                                if ($item['inventory_status'] == 1){
+                                                    echo '<span>Còn hàng</span>';
+                                                }
+                                                else if($item['inventory_status'] == 2){
+                                                    echo '<span>Sắp hết</span>';
+                                                }
+                                                else if($item['inventory_status'] == 3){
+                                                    echo '<span>Hết hàng</span>';
+                                                }
+                                                ?>
+                                            </td>                    
                                         </tr>
                                     <?php
                                     }

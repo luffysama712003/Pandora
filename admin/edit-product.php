@@ -72,7 +72,7 @@ include ("../admin/includes/header.php");
                                                 <div class="col-md-6">
                                                 <br>
                                                     <label class="mb-0"><b>Giá sau khi giảm</b></label>
-                                                    <input type="text" required name="selling_price" value="<?= $data['selling_price']; ?>"  placeholder="Enter Selling Price" class="form-control mb-2">
+                                                    <input type="text" name="selling_price" value="<?= $data['selling_price']; ?>"  placeholder="Enter Selling Price" class="form-control mb-2">
                                                 </div>                              
                                                 <div class="col-md-12">
                                                 <br>

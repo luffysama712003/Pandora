@@ -2,7 +2,6 @@
 session_start();
 include("../config/dbcon.php");
 include("../functions/myfunctions.php");
-
 if (isset($_POST['order'])){
     $user_id    = $_SESSION['auth_user']['id'];
     $product_id = $_POST['product_id'];
@@ -14,7 +13,13 @@ if (isset($_POST['order'])){
         $slug    = $product['slug'];
         if ($quantity != "" && $quantity <= $product['qty']){
             $selling_price  = $product['selling_price'];
-            $insert_query   = "INSERT INTO order_detail (`user_id`, `product_id`, `selling_price`, `quantity`) VALUES ('$user_id','$product_id','$selling_price','$quantity')";
+            $original_price = $product['original_price'];
+            if($selling_price != ""){
+                $insert_query   = "INSERT INTO order_detail (`user_id`, `product_id`, `selling_price`, `quantity`) VALUES ('$user_id','$product_id','$selling_price','$quantity')";
+            }
+            else{
+                $insert_query   = "INSERT INTO order_detail (`user_id`, `product_id`, `selling_price`, `quantity`) VALUES ('$user_id','$product_id','$original_price','$quantity')";
+            }
             $insert_query_run=mysqli_query($conn,$insert_query);
             if($insert_query_run){
                 $_SESSION['message']="Thêm vào giỏ hàng thành công";
@@ -41,7 +46,7 @@ if (isset($_POST['order'])){
     $product_id = $_POST['product_id'];
     $quantity   = $_POST['quantity'];
 
-    // Lấy Số lương
+    // Lấy Số lượng
     $query          = "SELECT `qty` FROM `products` WHERE `id` = '$product_id'";
     $total_quantity = mysqli_fetch_array(mysqli_query($conn, $query))['qty'];
 
@@ -69,7 +74,7 @@ if (isset($_POST['order'])){
                 WHERE `order_detail`.`status` = 1 AND `order_detail`.`user_id` = '$user_id'";    
     $check_products = mysqli_query($conn, $query);
 
-    // Kiểm tra số lượng trong kho và số luongj đặt của từng sản phẩm
+    // Kiểm tra số lượng trong kho và số lượng đặt của từng sản phẩm
     foreach ($check_products as $product){
         if ($product['quantity'] > $product['qty']){
             $_SESSION['message'] = "Số lượng sản phẩm: " . $product['name'] . " không đủ trong kho. Chỉ còn " . $product['qty'] . " Sản phẩm";
@@ -92,6 +97,14 @@ if (isset($_POST['order'])){
         foreach ($check_products as $product){
             $qty        = $product['qty'] - $product['quantity'];
             $product_id = $product['id'];
+            if($qty==0){
+                $status = "UPDATE `products` SET `inventory_status` = 3 WHERE `id` =  '$product_id'";
+                mysqli_query($conn, $status);      
+            }
+            if($qty < 3){
+                $status = "UPDATE `products` SET `inventory_status` = 2 WHERE `id` =  '$product_id'";
+                mysqli_query($conn, $status);
+            }
             $query = "UPDATE `products` SET `qty` = '$qty' WHERE `id` = '$product_id'";
             mysqli_query($conn, $query);
         }
@@ -102,27 +115,46 @@ if (isset($_POST['order'])){
         $address= $_POST['address'];
         $update_query= "UPDATE `users` SET `name`='$name', `phone`='$phone', `address`='$address' WHERE `id`='$id' ";
         $update_query_run=mysqli_query($conn,$update_query);
-        if($update_query_run)
-        {
+        if ($update_query_run){
             $_SESSION['message']="Mua sản phẩm thành công";
-        }else $_SESSION['message']="Không thành công";
+        }
+        else $_SESSION['message']="Không thành công";
         echo 1;
     }
 
 
 
-}else if(isset($_POST['rate'])){
+ }
+else if(isset($_POST['rate'])){
     $user_id    = $_SESSION['auth_user']['id'];
-    $id         = $_POST['id'];
+    $order_id   = $_POST['id'];
     $rate       = $_POST['rating'];
     $comment    = $_POST['comment'];
 
-    $query =    "UPDATE `order_detail` SET `rate` = '$rate', `comment` = '$comment'
-                WHERE `id` = '$id' AND `user_id` = '$user_id' AND `status` = '4'";
-    mysqli_query($conn, $query);
+    $checkQuery = "SELECT * FROM `order_detail` WHERE `order_id` = '$order_id' AND `user_id` = '$user_id'";
+    $checkResult = mysqli_query($conn, $checkQuery);
 
-    $_SESSION['message']="Đánh giá sản phẩm thành công";
-    header("Location: ../cart-status.php");
+    if (mysqli_num_rows($checkResult) > 0) {
+        $updateQuery = "UPDATE `order_detail` SET `rate` = '$rate', `comment` = '$comment' 
+        WHERE `order_id` = '$order_id' AND `user_id` = '$user_id' AND `status`='4'";
+        $updateResult = mysqli_query($conn, $updateQuery);
+
+        if ($updateResult) {
+            $_SESSION['message']="Đánh giá sản phẩm thành công";
+            header("Location: ../cart-status.php");
+        } else {
+            $_SESSION['message']="Có lỗi khi cập nhật đánh";
+        }
+    }else{
+        $insertQuery = "INSERT INTO `order_detail` (`user_id`, `order_id`, `rate`, `comment`) VALUES ('$user_id', '$order_id', '$rate', '$comment')";
+        $insertResult = mysqli_query($conn, $insertQuery);
+        if($insertQuery){
+            $_SESSION['message']="Đánh giá sản phẩm thành công";
+            header("Location: ../cart-status.php");
+        }
+        else{
+            $_SESSION['message']="Có lỗi khi lưu đánh giá";
+        }
+    } 
 }
-
 ?>

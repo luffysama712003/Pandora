@@ -21,7 +21,7 @@ include ("../admin/includes/header.php");
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>so với tháng trước</p>
+                    <!-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3% </span>so với tháng trước</p> -->
                     </div>
                 </div>
                 </div>
@@ -38,7 +38,7 @@ include ("../admin/includes/header.php");
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>so với tuần trước</p>
+                    <!-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>so với tuần trước</p> -->
                     </div>
                 </div>
                 </div>
@@ -55,7 +55,7 @@ include ("../admin/includes/header.php");
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> so với hôm qua </p>
+                    <!-- <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> so với hôm qua </p> -->
                     </div>
                 </div>
                 </div>
@@ -72,7 +72,7 @@ include ("../admin/includes/header.php");
                     </div>
                     <hr class="dark horizontal my-0">
                     <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>so với hôm qua</p>
+                    <!-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>so với hôm qua</p> -->
                     </div>
                 </div>
                 </div>

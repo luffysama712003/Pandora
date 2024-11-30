@@ -19,7 +19,7 @@ $data= mysqli_fetch_array($users);
     <!-- header -->
  
     <!-- end header -->
-    <div class="container">
+    <div class="container pt-5">
         <div class="row">
             <div class="col-md-3">
                 <h1 >Trang cá nhân</h1>
@@ -39,7 +39,7 @@ $data= mysqli_fetch_array($users);
                         <label class="mb-0" for=""><b>Xác nhận mật khẩu</b></label>
                         <input class="form-control" type="password" name="cpassword"><br> 
                         <input type="hidden" name="update_user_btn" value="true">   
-                        <button type="submit" class="btn btn-primary" >Lưu</button>
+                        <button type="submit" class="btn btn-dark " >Lưu</button>
                 </form>         
             </div>           
         </div>

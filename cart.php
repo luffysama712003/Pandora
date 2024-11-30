@@ -86,10 +86,10 @@ if (!isset($_SESSION['auth_user']['id'])){
                                     </span>
                                 </td>
                                 <td>
-                                    <a class="btn-buy" style="font-size: 15px; background-color: #fc8d8b" href="./functions/ordercode.php?deleteID=<?= $product['id']?>">Xóa</a>
+                                    <a class="btn btn-dark rounded-0" style="font-size: 15px; padding: 3px 10px" href="./functions/ordercode.php?deleteID=<?= $product['id']?>">Xóa</a>
                                 </td>
                                 <td>
-                                    <button class="btn-buy">Cập nhập</button>
+                                    <button class="btn btn-dark rounded-0 " style="padding: 3px 10px">Cập nhập</button>
                                 </td>
                             </form>
                         </tr>
@@ -104,7 +104,7 @@ if (!isset($_SESSION['auth_user']['id'])){
                         <button class="btn-buy" style="float: right;">Đặt hàng</button>
                     </form> -->
                     <p style="display: block;">Tổng tiền: $<?=$total_price?></p>
-                    <a href="pay.php" class="btn-buy" style="float: right;">Thanh toán</a>
+                    <a href="pay.php" class="btn btn-dark rounded-0" style="float: right;">Thanh toán</a>
                 <?php }     ?>
                 <a href="./cart-status.php">
                     <h4>Xem tất cả đơn hàng</h4>

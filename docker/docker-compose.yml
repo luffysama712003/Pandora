@@ -1,0 +1,53 @@
+services:
+  web:
+    build:
+      context: ../
+      dockerfile: docker/dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ../:/var/www/html
+      - ../PHPMailer:/var/www/html/PHPMailer  
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - pandora-network  
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: atshop_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - atshop_db:/var/lib/mysql
+      - ../atshop_db.sql:/docker-entrypoint-initdb.d/atshop_db.sql
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - pandora-network 
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_TIMEZONE: 'Asia/Ho_Chi_Minh'
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - pandora-network  
+
+volumes:
+  atshop_db:  
+
+networks:
+  pandora-network:
+    driver: bridge  

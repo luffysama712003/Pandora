@@ -1,14 +1,10 @@
-
-<?php 
-include("./includes/header.php");
-?>
-
+<?php include("./includes/header.php"); ?>
 <div class="py-5">
     <div class="container">
      <div class="row justify-content-center">
          <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-primary">
+                <div class="card-header bg-dark">
                   <h1 style="color:white ; ">Đăng ký</h1>
                 </div>
                 <div class="card-body">
@@ -35,7 +31,7 @@ include("./includes/header.php");
                         </div>
                         <!-- Đăng kí -->
                         <input type="hidden" name="register-btn" value="check">
-                        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                        <button type="submit" class="btn btn-dark">Đăng Ký</button>
                     </form>
                 </div>
 

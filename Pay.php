@@ -1,27 +1,30 @@
-<?php 
+<?php
 include("./includes/header.php");
-if (!isset($_SESSION['auth_user']['id'])){
+if (!isset($_SESSION['auth_user']['id'])) {
     die("Từ Chối truy cập <a href='./login'>Đăng nhập ngay</a>");
 }
 
 $id = $_SESSION['auth_user']['id'];
 
-$users = getByID("users",$id);                              
-$data= mysqli_fetch_array($users);
+$users = getByID("users", $id);
+$data = mysqli_fetch_array($users);
 ?>;
 
 <style>
-    th,td{
+    th,
+    td {
         padding: 5px;
         text-align: center;
     }
-    .input-number{
+
+    .input-number {
         width: 100%;
         font-size: 20px;
         outline: none;
         border: none;
     }
-    .btn-buy{
+
+    .btn-buy {
         border: none;
         outline: none;
         font-size: 17px;
@@ -48,9 +51,9 @@ $data= mysqli_fetch_array($users);
 
             <div class="box" style="padding: 0 40px">
                 <div class="product-info">
-                    <?php include("PayInclude.php");?>
-                <br>
-                <br>
+                    <?php include("PayInclude.php"); ?>
+                    <br>
+                    <br>
                 </div>
             </div>
         </div>
@@ -63,68 +66,77 @@ $data= mysqli_fetch_array($users);
     <!-- <script src="./assets/font/jquery/jquery-3.6.1.js"></script> -->
     <script type="text/javascript" src="./assets/js/Wn3.js"></script>
 </body>
-    <script>
-        $(document).ready(function () {
-            $('.input-number').on('change', function (e) {
-                if (e.target.value == 0){
-                    e.target.value = 1;
-                }
-                const node      = $(this).parent().parent();
-                const price     = parseInt(node.find('.product-price').val());
-                let total_order = parseInt(e.target.value);
-                let total_price = price * total_order;
-                node.find('.total-price').html(total_price);
-            })
-        });
-    </script>
-
 <script>
-$(document).ready(function() {
-  $(".btn-buy").click(function(event) {
-    event.preventDefault();
-
-    let addtional = $("#order_comments").val();
-    let name = $("#name").val();
-    let phone = $("#phone").val();
-    let address = $("#address").val();
-
-    // Chuyển đổi form thành mảng các đối tượng thuộc tính và giá trị
-    var formDataArray = $("form").serializeArray();
-
-    // Kiểm tra radio button đã được chọn
-    if ($("#payment_method_bacs").is(":checked")) {
-      let payment_method_bacs = $("#payment_method_bacs").val();
-      formDataArray.push({ name: "payment_method", value: 0 });
-    }else{
-      let payment_method_cod = $("#payment_method_cod").val();
-      formDataArray.push({ name: "payment_method", value: 1 });
-    }
-
-    // Thêm biến tùy chỉnh vào mảng formDataArray
-    formDataArray.push({ name: "addtional", value: addtional });
-    formDataArray.push({ name: "name", value: name });
-    formDataArray.push({ name: "phone", value: phone });
-    formDataArray.push({ name: "address", value: address });
-
-    // Chuyển đổi mảng formDataArray thành chuỗi dữ liệu
-    var formData = $.param(formDataArray);
-    console.log(formData);
-    // Gửi dữ liệu form thông qua AJAX
-    $.ajax({
-      url: "./functions/ordercode.php",
-      type: "post",
-      data: formData,
-      success: function(response) {
-        if (response == 1) {
-            console.log(response);
-            window.location.href = "cart-status.php";
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      }
+    $(document).ready(function () {
+        $('.input-number').on('change', function (e) {
+            if (e.target.value == 0) {
+                e.target.value = 1;
+            }
+            const node = $(this).parent().parent();
+            const price = parseInt(node.find('.product-price').val());
+            let total_order = parseInt(e.target.value);
+            let total_price = price * total_order;
+            node.find('.total-price').html(total_price);
+        })
     });
-  });
+</script>
+<script>
+    $(document).ready(function () {
+    $(".btn-buy").click(function (event) {
+        event.preventDefault();
+        let totalPrice = $('#price_amount').text();
+            totalPrice = totalPrice.replace(/\s*\$\s*/, '');
+        let addtional = $("#order_comments").val();
+        let name = $("#name").val();
+        let phone = $("#phone").val();
+        let address = $("#address").val();
+        
+        if (address === '') {
+            alert("Vui lòng nhập địa chỉ.");
+            return;
+        }
+        if (totalPrice=='0'){
+            alert("Vui lòng chọn sản phẩm thanh toán");
+            return;
+        }
+        // Tạo mảng dữ liệu từ form
+        var formDataArray = $("form").serializeArray();
+
+        // Kiểm tra radio button đã được chọn
+        if ($("#payment_method_bacs").is(":checked")) {
+            formDataArray.push({ name: "payment_method", value: 0 });
+        } else {
+            formDataArray.push({ name: "payment_method", value: 1 });
+        }
+
+        // Thêm dữ liệu tùy chỉnh vào mảng
+        formDataArray.push({ name: "addtional", value: addtional });
+        formDataArray.push({ name: "name", value: name });
+        formDataArray.push({ name: "phone", value: phone });
+        formDataArray.push({ name: "address", value: address });
+
+        // Chuyển đổi mảng thành chuỗi dữ liệu
+        var formData = $.param(formDataArray);
+        console.log(formData);
+
+        // Gửi dữ liệu form qua AJAX
+        $.ajax({
+            url: "./functions/ordercode.php",
+            type: "post",
+            data: formData,
+            success: function (response) {
+                if (response == 1) {
+                    window.location.href = "cart-status.php";
+                } else {
+                    alert("Đặt hàng không thành công.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
 });
+
 </script>
 </html>

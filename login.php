@@ -9,20 +9,21 @@ include("./includes/header.php");
         <div class="row justify-content-center">
             <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header bg-primary">
+                        <div class="card-header bg-dark">
                         <h1 style="color:white ;">Đăng nhập</h1>
                         </div>
                         <div class="card-body">
                             <form action="./functions/authcode.php" method="POST"> 
                                     <div class="mb-3">
                                         <b><label for="exampleInputEmail1" class="form-label">Địa chỉ Email</label></b>
-                                        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Nhập Email">
+                                        <input required type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Nhập Email">
                                     </div>
                                     <div class="mb-3">
                                         <b><label for="exampleInputPassword1" class="form-label">Mật khẩu</label></b>
-                                        <input type="password" name="password" class="form-control"  placeholder="Nhập mật khẩu">
+                                        <input required type="password" name="password" class="form-control"  placeholder="Nhập mật khẩu">
                                     </div>              
-                                    <button type="submit" name="login_btn" class="btn btn-primary">Đăng nhập</button>
+                                    <button type="submit" name="login_btn" class="btn btn-dark d-block mb-3">Đăng nhập</button>
+                                    <a href="./forgot-password.php">Quên mật khẩu</a>
                             </form>
                         </div>
                     </div>

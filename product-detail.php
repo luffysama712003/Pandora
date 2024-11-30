@@ -65,11 +65,20 @@
                                 <i class='bx bxs-star'></i>
                             </span>
                         </div>
-                        <h3>Đặc điểm nổi bật</h3>
+                        <h3>Chi tiết sản phẩm</h3>
                         <p class="product-description">
                             <?= nl2br($product['small_description']) ?>
                         </p>
-                        <div class="product-info-price">$<?= $product['selling_price'] ?></div>
+                        <?php
+                            if($product['selling_price']!=NULL){?>
+                                <div class="product-info-price">$<?= $product['selling_price'] ?></div>
+                        <?php
+                            }else{?>
+                             <div class="product-info-price">$<?= $product['original_price'] ?></div>
+                        <?php
+                            }
+                        ?>
+                        
                         <div class="product-quantity-wrapper">
                             <span class="product-quantity-btn" onclick="QualityChange('down')">
                                 <i class='bx bx-minus'></i>
@@ -113,7 +122,7 @@
                         </p>
                 </div>
             </div>
-            <div class="box">
+            <div class="box pb-5">
                 <div class="box-header">
                     Đánh giá
                 </div>

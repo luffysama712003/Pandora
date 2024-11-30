@@ -100,7 +100,9 @@
                         </tr>
                         <tr class="cart-subtotal">
                             <th>Tạm tính</th>
-                            <td><span class="price-amount"><?=$total_price?>&nbsp;<span class="price-currencySymbol">$</span></span></td>
+                            <td>
+                                <span class="price-amount" id="price_amount"><?=$total_price?>&nbsp;<span class="price-currencySymbol">$</span></span>
+                            </td>
                         </tr>
                         <tr class="order-total">
                             <th>Tổng</th>

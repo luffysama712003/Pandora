@@ -1,0 +1,15 @@
+FROM php:8.2.4-apache
+
+RUN apt-get update && apt-get install -y tzdata && rm -rf /var/lib/apt/lists/*
+
+ENV TZ=Asia/Ho_Chi_Minh
+RUN ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+RUN echo "sendmail_path = /usr/bin/msmtp -t" >> /usr/local/etc/php/conf.d/20-mail.ini
+
+COPY . /var/www/html
+
+RUN chown -R www-data:www-data /var/www/html

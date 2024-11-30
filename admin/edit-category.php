@@ -17,7 +17,7 @@ include ("../admin/includes/header.php");
                         ?>
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Edit Category</h4>
+                                    <h4>Chỉnh sửa danh mục</h4>
                                 </div>
                                 <div class="card-body">
                                     <form action="code.php" method="POST" enctype="multipart/form-data"><!-- Uploads image -->
@@ -54,7 +54,7 @@ include ("../admin/includes/header.php");
                                             </div>
                                             <div class="col-md-12">
                                                 <br>
-                                                <button type="submit" class="btn btn-primary" name="update_category_btn">Update</button>
+                                                <button type="submit" class="btn btn-primary" name="update_category_btn">Cập nhật</button>
                                             </div>
                                         </div>
                                     </form>

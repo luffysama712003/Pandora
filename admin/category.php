@@ -35,6 +35,7 @@ include ("../admin/includes/header.php");
                                             <td><?= $item['name'];?></td>
                                             <td>
                                                 <img src="../images/<?= $item['image']; ?>" width="50px" height="50px" alt="<?= $item['name'];?>">
+                                            </td>
                                             <td>
                                                 <?= $item['status'] == '0' ? "Hiển thị":"Ẩn"?>
                                             </td> 

@@ -6,7 +6,8 @@ if(isset($_SESSION['auth']))
     {
          redirect(" ../index.php", "Bạn không có quyền truy cập trang này!");
     }
-}else
+}
+else
 {   
     redirect("../login.php", "Đăng nhập để tiếp tục");
 } 

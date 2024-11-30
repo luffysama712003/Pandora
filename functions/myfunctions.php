@@ -6,6 +6,17 @@ function getAll($table)
     $query= "SELECT * FROM $table ORDER BY id DESC";
     return $query_run= mysqli_query($conn, $query);
 }
+function getProducts($type = -1){
+    global $conn;
+    $getStatus='1,2,3';
+    if($type != -1){
+        $query= "SELECT * FROM `products`  WHERE `inventory_status` = $type ORDER BY id DESC" ;
+    }
+   else{
+    $query= "SELECT * FROM `products` WHERE `inventory_status` IN ($getStatus) ORDER BY id DESC" ;
+   }
+    return $query_run= mysqli_query($conn, $query);
+}
 function getByID($table,$id)
 {
     global $conn;
@@ -34,7 +45,7 @@ function getAllOrder($type = -1){
     global $conn;
     $getStatus = "1,2,3,4";
     if ($type != -1){
-        $getStatus = $type . "";
+        $getStatus = $type;
     }
     $query =    "SELECT `orders`.*,COUNT(`order_detail`.`id`) as`quantity`,
                 `users`.`name`,`users`.`email`,`users`.`phone`,`users`.`address` FROM`orders`
@@ -70,8 +81,11 @@ function totalPriceGet(){
 
 function redirect($url, $message)
 {
-    $_SESSION['message']= $message;
-    header("Location:" . $url);
+    $_SESSION['message'] = $message;
+    header("Location: " . $url);
     exit();
 }
+
+
+
 ?>

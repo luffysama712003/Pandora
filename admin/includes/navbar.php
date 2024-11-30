@@ -40,14 +40,6 @@ $page= substr($_SERVER['SCRIPT_NAME'], strripos($_SERVER['SCRIPT_NAME'],"/")+1);
                 {
                   echo "Quản lý đơn hàng / order-detail ";
                 }
-                else if($page== "add-blog.php")
-                {
-                  echo "Thêm bài viết ";
-                }
-                else if($page== "blog.php")
-                {
-                  echo "Tất cả bài viết ";
-                }
               ?>
             </li>
           </ol>

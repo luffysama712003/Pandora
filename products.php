@@ -1,9 +1,6 @@
-<?php
-
-include("./includes/header.php");
-
-$products   =   getLatestProducts(9, $page, $type, $search);
-$page ++;
+<?php include("./includes/header.php");
+$products = getLatestProducts(9, $page, $type, $search);
+$page++;
 ?>
 
 <body>
@@ -20,21 +17,21 @@ $page ++;
             <div class="box">
                 <div class="row">
                     <div class="col-3 filter-col" id="filter-col">
-                        <div class="box filter-toggle-box">
+                        <!-- <div class="box filter-toggle-box">
                             <button class="btn-flat btn-hover" id="filter-close">close</button>
-                        </div>
+                        </div> -->
                         <div class="box">
-                            <span class="filter-header">
+                        <span class="filter-header">
                                 Danh mục
                             </span>
-                            <ul class="filter-list">
+                            <ul class="filter-list p-0 mb-5">
                                 <?php
                                 $categories = getAllActive("categories");
 
                                 if (mysqli_num_rows($categories) > 0) {
                                     foreach ($categories as $item) {
-                                ?>
-                                        <li><a href="./products.php?type=<?= $item['slug']?>"><?= $item['name']; ?></a></li>
+                                        ?>
+                                        <li><a href="./products.php?type=<?= $item['slug'] ?>"><?= $item['name']; ?></a></li>
                                 <?php
                                     }
                                 } else {
@@ -58,70 +55,79 @@ $page ++;
                         </div>
                         <div class="box">
                             <div class="row" id="products">
-                            <?php foreach ($products as $product) { ?>
-                                <div class="col-4 col-md-6 col-sm-12">
-                                    <div class="product-card">
-                                        <div class="product-card-img">
-                                        <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
-                                        <img src="./images/<?= $product['image'] ?>" alt="">
-                                        <img src="./images/<?= $product['image'] ?>" alt="">
-                                    </a>
-                                        </div>
-                                        <div class="product-card-info">
-                                        <form method="post" action="./functions/ordercode.php">
-                                            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                                            <input type="hidden" name="quantity" id="quantity" value="1">
-                                            <input type="hidden" name="order" value="true">
-                                            <?php if (!isset($_SESSION['auth_user']['id'])) { ?>
-                                                <a href="./login.php">
-                                                    <button type="button" class="btn-flat btn-hover">Mua Ngay</button>
+                                <?php foreach ($products as $product) { 
+                                    ?>
+                                    <div class="col-4 col-md-6 col-sm-12">
+                                        <div class="product-card">
+                                            <div class="product-card-img">
+                                                <a href="./product-detail.php?slug=<?= $product['slug'] ?>">
+                                                    <img src="./images/<?= $product['image'] ?>" alt="">
+                                                    <img src="./images/<?= $product['image'] ?>" alt="">
                                                 </a>
-                                            <?php } else { 
-                                                $check = checkOrder($product['id']);
-                                                if ($check == 1) { ?>
-                                                    <a href="./cart.php">
-                                                        <button type="button" class="btn-flat btn-hover">Mua ngay</button>
-                                                    </a>
-                                            <?php 
-                                                }else{
-                                                    echo '<button class="btn-flat btn-hover">Thêm vào giỏ hàng</button>';
-                                                }
-                                            } 
-                                            ?>
-                                        </form>
-                                            <div class="product-card-name">
-                                                <?= $product['name'] ?>
                                             </div>
-                                            <div class="product-card-price">
-                                                <span><del>$<?= $product['original_price'] ?></del></span>
-                                                <span class="curr-price">$<?= $product['selling_price'] ?></span>
+                                            <div class="product-card-info">
+                                                <form method="post" action="./functions/ordercode.php">
+                                                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                                    <input type="hidden" name="quantity" id="quantity" value="1">
+                                                    <input type="hidden" name="order" value="true">
+                                                    <?php if (!isset($_SESSION['auth_user']['id'])) { ?>
+                                                        <a href="./login.php">
+                                                            <button type="button" class="btn-flat btn-hover">Mua Ngay</button>
+                                                        </a>
+                                                    <?php } else {
+                                                        $check = checkOrder($product['id']);
+                                                        if ($check == 1) { ?>
+                                                            <a href="./cart.php">
+                                                                <button type="button" class="btn-flat btn-hover">Mua ngay</button>
+                                                            </a>
+                                                            <?php
+                                                        } else {
+                                                            echo '<button class="btn-flat btn-hover">Thêm vào giỏ hàng</button>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </form>
+                                                <div class="product-card-name">
+                                                    <?= $product['name'] ?>
+                                                </div>
+                                                <div class="product-card-price">
+                                                    <?php
+                                                        if($product['selling_price']!=NULL){?>
+                                                        <span>$<del><?= $product['original_price'] ?></del></span>
+                                                        <span class="curr-price">$<?= $product['selling_price'] ?></span>
+                                                    <?php
+                                                        }else{?>
+                                                         <span class="ms-2 fs-5 fw-semibold" style="color:black">$<?= $product['original_price'] ?></span>
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
+                                                   
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php } ?>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="box">
                             <ul class="pagination">
-                                <?php 
-                                // if ($page != 1) {
-                                //     $page--;
-                                //     echo "<li><a href='?page=$page'><i class='bx bxs-chevron-left'></i></a></li>";
-                                //     $page++;
-                                // }
-                                for($i = 1 ; $i <= ceil(totalValue('products')/9) ; $i++) { 
-                                    if ($i == $page) {
-                                        echo "<li><a class='active'>$i</a></li>";
-                                    }else{
-                                        echo "<li><a href='?page=$i'>$i</a></li>";
-                                    }
-                                } 
-                                // if ($page != ceil(totalValue('products')/9)){
-                                //     $page ++;
-                                //     echo "<li><a href='?page=$page'><i class='bx bxs-chevron-right'></i></a></li>";
-                                // }
-                                ?>
+                                <?php
+                                        for ($i = 1; $i <= ceil(totalValueProducts($type,$search) / 9); $i++) {
+                                            if ($i == $page) {
+                                                echo "<li><a class='active'>$i</a></li>";
+                                            }
+                                            else if (!empty($type)) {
+                                                echo "<li><a href='?page=$i&type=$type'>$i</a></li>";
+                                            }else if(!empty($search)) {
+                                                echo "<li><a href='?page=$i&search=$search'>$i</a></li>";
+                                            }
+                                            else{
+                                                echo "<li><a href='?page=$i'>$i</a></li>";
+                                            }
+                                            
+                                        }
+                                ?> 
                             </ul>
                         </div>
                     </div>

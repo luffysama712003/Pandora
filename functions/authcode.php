@@ -2,7 +2,10 @@
 session_start();
 include("../config/dbcon.php");
 include("../functions/myfunctions.php");
-
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
+require '../PHPMailer/src/Exception.php';
+// include("./functions/userfunctions.php");
 if(isset($_POST['register-btn']))
 {
     $name= mysqli_real_escape_string($conn,$_POST['name']);
@@ -130,10 +133,6 @@ else if(isset($_POST['update_user_btn']))
             redirect("../user-profile.php","Mật khẩu không khớp, vui lòng nhập lại");
         }
     }
-
-    
-
-   
    
 }
 ?>
