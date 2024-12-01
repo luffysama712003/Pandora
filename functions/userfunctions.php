@@ -51,9 +51,6 @@ function totalValue($table,$type="",$search="")
     }
     $totalValue = mysqli_query($conn, $query);
     $totalValue = mysqli_fetch_array($totalValue);
-    if ($totalValue['number'] == 0) {
-        return "Không tìm thấy kết quả.";
-    }
     return $totalValue['number'];
 }
 function totalValueProducts($type="",$search="")
@@ -219,6 +216,7 @@ function getOrderByUserId()
                         o.id,
                         o.created_at,
                         o.addtional,
+                       ANY_VALUE(od.rate) AS rate,
                         AVG(od.rate) AS avg_rate  -- Tính trung bình điểm đánh giá
                     FROM
                         orders o

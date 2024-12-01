@@ -114,19 +114,20 @@ $page++;
                             <ul class="pagination">
                                 <?php
                                         for ($i = 1; $i <= ceil(totalValueProducts($type,$search) / 9); $i++) {
-                                            if ($i == $page) {
-                                                echo "<li><a class='active'>$i</a></li>";
-                                            }
-                                            else if (!empty($type)) {
-                                                echo "<li><a href='?page=$i&type=$type'>$i</a></li>";
-                                            }else if(!empty($search)) {
-                                                echo "<li><a href='?page=$i&search=$search'>$i</a></li>";
-                                            }
-                                            else{
-                                                echo "<li><a href='?page=$i'>$i</a></li>";
-                                            }
+                                            $tmp = totalValueProducts($type,$search);
                                             
-                                        }
+                                                if ($i == $page) {
+                                                    echo "<li><a class='active'>$i</a></li>";
+                                                }
+                                                else if (!empty($type)) {
+                                                    echo "<li><a href='?page=$i&type=$type'>$i</a></li>";
+                                                }else if(!empty($search)) {
+                                                    echo "<li><a href='?page=$i&search=$search'>$i</a></li>";
+                                                }
+                                                else{
+                                                    echo "<li><a href='?page=$i'>$i</a></li>";
+                                                }
+                                            }       
                                 ?> 
                             </ul>
                         </div>

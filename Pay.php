@@ -99,6 +99,10 @@ $data = mysqli_fetch_array($users);
             alert("Vui lòng chọn sản phẩm thanh toán");
             return;
         }
+        if(phone === ''){
+            alert("Vui lòng nhập số điện thoại.");
+            return;
+        }
         // Tạo mảng dữ liệu từ form
         var formDataArray = $("form").serializeArray();
 

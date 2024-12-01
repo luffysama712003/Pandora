@@ -31,7 +31,7 @@
                             <font>*</font>
                         </label>
                         <span>
-                            <input class="form-control" id="phone" required type="text" name="phone" value="<?= $data['phone']?>"><br>
+                            <input class="form-control" id="phone" required type="number" name="phone" value="<?= $data['phone']?>"><br>
                         </span>
                     </p>
                     <p class="email-address">

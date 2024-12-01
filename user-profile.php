@@ -29,9 +29,9 @@ $data= mysqli_fetch_array($users);
                         <label class="mb-0" for=""><b>Họ và tên</b></label>
                         <input class="form-control" required type="text" name="name" value="<?= $data['name']?>" ><br>
                         <label class="mb-0" for=""><b>Email</b></label>
-                        <input readonly class="form-control" required type="text" name="email" value="<?= $data['email']?>" ><br>
+                        <input readonly class="form-control" required type="email" name="email" value="<?= $data['email']?>" ><br>
                         <label class="mb-0" for=""><b>Số điện thoại</b></label>
-                        <input class="form-control" required type="text" name="phone" value="<?= $data['phone']?>"><br>
+                        <input class="form-control" required type="number" name="phone" value="<?= $data['phone']?>"><br>
                         <label class="mb-0" for=""><b>Địa chỉ</b></label>
                         <input class="form-control" required type="text" name="address" value="<?= $data['address']?>" ><br>
                         <label class="mb-0" for=""><b>Mật khẩu</b></label>

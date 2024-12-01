@@ -57,7 +57,7 @@ if (isset($_POST['order'])){
         mysqli_query($conn, $query);
         $_SESSION['message']="Cập nhập sản phẩm thành công";
     }else{
-        $_SESSION['message']="Cập nhập số lượng sản phẩm quá lớn";
+        $_SESSION['message']="Chỉ còn $total_quantity sản phẩm trong kho";
     }
     
     header("Location: ../cart.php");
@@ -84,7 +84,7 @@ if (isset($_POST['order'])){
         }
     }
 
-    // Nếu hợp lệ sẽ tiền hành đặt hàng
+    // Nếu hợp lệ sẽ tiến hành đặt hàng
     if ($check) {
         $insert_query       = "INSERT INTO `orders`(`user_id`,`addtional`,`payment`) VALUES ('$user_id','$addtional','$payment_method')";
         $insert_query_run   = mysqli_query($conn, $insert_query);
