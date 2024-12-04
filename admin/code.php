@@ -7,6 +7,7 @@ if(isset($_POST['add_category_btn']))
 {
 
     $name= $_POST['name']; 
+    $slug=$name . "-" . rand(10,99);
     $description=$_POST['description'];
     $status=isset($_POST['status']) ? '1':'0';
     $image= $_FILES['image']['name'];
@@ -15,7 +16,15 @@ if(isset($_POST['add_category_btn']))
     $image_ext=pathinfo($image, PATHINFO_EXTENSION);
     $filename= time().'.'.$image_ext;
 
-    
+    $check_slug_query = "SELECT * FROM categories WHERE slug = '$slug'";
+    $check_slug_result = mysqli_query($conn, $check_slug_query);
+
+    // Nếu slug đã tồn tại, tạo slug mới
+    while (mysqli_num_rows($check_slug_result) > 0) {
+        $slug = $name . "-" . rand(10, 99); // Tạo lại slug mới
+        $check_slug_result = mysqli_query($conn, $check_slug_query); // Kiểm tra lại
+    }
+
     $check_query = "SELECT * FROM categories WHERE `name`='$name'";
     $check_query_run = mysqli_query($conn, $check_query);
 
@@ -40,7 +49,7 @@ if(isset($_POST['add_category_btn']))
 
     $category_id= $_POST['category_id'];
     $name= $_POST['name'];
-    $slug = isset($_POST['slug']) ? $_POST['slug'] . "-" . rand(10, 99) : rand(10, 99);
+    $slug = $_POST['slug'];
     $description=$_POST['description'];
     $status=isset($_POST['status']) ? '1':'0';
 
@@ -51,6 +60,7 @@ if(isset($_POST['add_category_btn']))
     if($new_image != "")
     {
         //$update_filename= $new_image;
+        //xử lí ảnh
         $image_ext=pathinfo($new_image, PATHINFO_EXTENSION);
         $update_filename= time().'.'.$image_ext;
     
@@ -110,13 +120,27 @@ else if(isset($_POST['add_product_btn']))
     $category_id= $_POST['category_id'];
 
     $name= $_POST['name'];
-    $slug = isset($_POST['slug']) ? $_POST['slug'] . "-" . rand(10, 99) : rand(10, 99);
+    $name = preg_replace('/[^a-zA-Z0-9]/', '-', strtolower($name));
+    $name = trim($name, '-');
+    // $slug = isset($_POST['slug']) ? $_POST['slug'] . "-" . rand(10, 99) : rand(10, 99);
+
+    // Tạo slug ban đầu
+    $base_slug = isset($_POST['slug']) ? $_POST['slug'] : $name;
+    $random_number = rand(10, 99);
+    $slug = $base_slug . "-" . $random_number;
     $check_slug_query = "SELECT * FROM products WHERE slug = '$slug'";
     $check_slug_result = mysqli_query($conn, $check_slug_query);
 
-    if (mysqli_num_rows($check_slug_result) > 0) {
-        $slug = $_POST['slug'] . "-" . rand(100, 999);
+    // if (mysqli_num_rows($check_slug_result) > 0) {
+    //     $slug = $_POST['slug'] . "-" . rand(100, 999);
+    // }
+    while (mysqli_num_rows($check_slug_result) > 0) {
+        $random_number = rand(100, 999); 
+        $slug = $base_slug . "-" . $random_number;
+        $check_slug_query = "SELECT * FROM products WHERE slug = '$slug'";
+        $check_slug_result = mysqli_query($conn, $check_slug_query);
     }
+    
     $small_description= $_POST['small_description'];
     $description= $_POST['description'];
     $original_price= $_POST['original_price'];
@@ -263,29 +287,45 @@ $update_product_query_run = mysqli_query($conn, $update_product_query);
 }
 else if(isset($_POST['delete_product_btn']))
 {
-    $product_id=mysqli_real_escape_string($conn,$_POST['product_id']);
+    $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
 
-    $product_query="SELECT * FROM products WHERE id='$product_id'";
-    $product_query_run=mysqli_query($conn,$product_query);
-    $product_data=mysqli_fetch_array($product_query_run);
-    $image=$product_data['image'];
+    // Kiểm tra sản phẩm trong đơn hàng
+    $order_check_query = "SELECT * FROM order_detail WHERE product_id='$product_id'";
+    $order_check_query_run = mysqli_query($conn, $order_check_query);
 
-    $delete_query= "DELETE FROM products WHERE id='$product_id'";
-    $delete_query_run=mysqli_query($conn,$delete_query);
-    
-    if($delete_query_run)
+    if(mysqli_num_rows($order_check_query_run) > 0)
     {
-        if(file_exists("../images/".$image))
-            {
-                unlink("../images/".$image);
-            }
-        redirect("products.php","Xóa sản phẩm thành công");
-    }else
-    {
-        redirect("products.php","Xảy ra lỗi");
+        // Nếu sản phẩm có trong đơn hàng, không cho phép xóa
+        redirect("products.php", "Không thể xóa sản phẩm vì có đơn hàng chứa sản phẩm");
     }
+    else
+    {
+        // Lấy thông tin sản phẩm
+        $product_query = "SELECT * FROM products WHERE id='$product_id'";
+        $product_query_run = mysqli_query($conn, $product_query);
+        $product_data = mysqli_fetch_array($product_query_run);
+        $image = $product_data['image'];
 
+        // Xóa sản phẩm
+        $delete_query = "DELETE FROM products WHERE id='$product_id'";
+        $delete_query_run = mysqli_query($conn, $delete_query);
+
+        if($delete_query_run)
+        {
+            // Xóa ảnh nếu tồn tại
+            if(file_exists("../images/" . $image))
+            {
+                unlink("../images/" . $image);
+            }
+            redirect("products.php", "Xóa sản phẩm thành công");
+        }
+        else
+        {
+            redirect("products.php", "Không thể xóa sản phẩm");
+        }
+    }
 }
+
 else if (isset($_GET['order'])){
     $order_id   = $_GET['id'];
     $type       = $_GET['order'];

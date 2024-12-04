@@ -25,7 +25,7 @@ include ("../admin/includes/header.php");
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="hidden" name="category_id" value="<?= $data['id']?>" >
-                                                <label for=""><b>Name</b></label>
+                                                <label for=""><b>Tên</b></label>
                                                 <input type="text" id="full-name" required value="<?=$data['name']?>" name="name" placeholder="Enter Category Name" class="form-control"> 
                                             </div>                               
                                             <div class="col-md-12">
@@ -35,21 +35,21 @@ include ("../admin/includes/header.php");
                                             </div>                              
                                             <div class="col-md-12">
                                             <br>
-                                                <label for=""><b>Description</b></label>
+                                                <label for=""><b>Mô tả</b></label>
                                                 <input type="text" required value="<?=$data['description']?>" name="description" placeholder="Enter Description" class="form-control">
                                             </div>                              
                                             <div class="col-md-12">
                                             <br>
-                                                <label for=""><b>Image</b></label>
+                                                <label for=""><b>Hình ảnh</b></label>
                                                 <input type="file" name="image" class="form-control">
-                                                <label for="">Current Image</label>
+                                                <label for="">Hiện tại</label>
                                                 <input type="hidden" name="old_image" value="<?=$data['image']?>">
                                                 <img src="../images/<?= $data['image']?>" height="50px" width="50px" alt="">
 
                                             </div>
                                             <div class="col-md-6">
                                             <br>
-                                                <label for=""><b>Status</b></label>
+                                                <label for=""><b>Trạng thái</b></label>
                                                 <input type="checkbox" <?= $data['status'] ?"checked":"" ?> name="status">
                                             </div>
                                             <div class="col-md-12">

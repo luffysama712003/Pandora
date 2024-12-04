@@ -77,7 +77,7 @@ $products=getProducts($type);
                                     }
                                 }else
                                 {
-                                    echo "No records found";
+                                    echo "Không tìm thấy bản ghi";
                                 }
                             ?>
     

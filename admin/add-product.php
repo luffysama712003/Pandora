@@ -62,7 +62,7 @@ include ("../admin/includes/header.php");
                                 <div class="col-md-12">
                                 <br>
                                     <label class="mb-0"><b>Hình ảnh</b></label>
-                                    <input type="file" name="image" class="form-control mb-2">
+                                    <input required type="file" name="image" class="form-control mb-2">
                                 </div>
                                 <div class="col-md-6">
                                 <br>
@@ -90,4 +90,5 @@ include ("../admin/includes/header.php");
 </div>
 </body>
 <script type="text/javascript" src="./assets/js/StringConvertToSlug.js"></script>
+
 <?php include ("../admin/includes/footer.php"); ?>

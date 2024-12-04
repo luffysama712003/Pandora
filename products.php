@@ -35,7 +35,7 @@ $page++;
                                 <?php
                                     }
                                 } else {
-                                    echo "no";
+                                    echo "Không có dữ liệu để hiển thị";
                                 }
                                 ?>
 

@@ -24,8 +24,6 @@ if(isset($_POST['register-btn']))
     //Check password no match
     else
     {
-        if($password == $cpassword)
-        {
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 //Inser user data
                 $pass_hash= password_hash($password,PASSWORD_DEFAULT);
@@ -40,9 +38,6 @@ if(isset($_POST['register-btn']))
             }else{
                 redirect("../register.php", "Địa chỉ email không hợp lệ");
             }
-        }else{
-            redirect("../register.php", "Mật khẩu không khớp");
-        }
     }  
 }
 else if(isset($_POST['login_btn']))

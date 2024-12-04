@@ -53,13 +53,20 @@
         let email = document.getElementById("InputEmail").value;
         let password1 = document.getElementById("InputPassword1").value;
         let password2 = document.getElementById("InputPassword2").value;
-        if(!validateEmail(email)){
+        let phone = document.getElementById("InputPhone").value;
+        // if(!validateEmail(email)){
+        //     alertify.set('notifier','position', 'top-right');
+        //     alertify.success('Lỗi email không hợp lệ');
+        //     e.preventDefault();
+        // }
+        if (phone.length !== 10) {
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success('Số điện thoại phải có 10 chữ số');
+        e.preventDefault();
+        } 
+        else if(password1 != password2){
             alertify.set('notifier','position', 'top-right');
-            alertify.success('Lỗi email không hợp lệ');
-            e.preventDefault();
-        }else if(password1 != password2){
-            alertify.set('notifier','position', 'top-right');
-            alertify.success('Mật khẩu chưa khớp');
+            alertify.success('Mật khẩu không khớp');
             e.preventDefault();
         }else if(password1.length <= 6){
             alertify.set('notifier','position', 'top-right');

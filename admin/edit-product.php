@@ -67,12 +67,12 @@ include ("../admin/includes/header.php");
                                                 <div class="col-md-6">
                                                 <br>
                                                     <label class="mb-0"><b>Giá tiền</b></label>
-                                                    <input type="text" required name="original_price" value="<?= $data['original_price']; ?>" placeholder="Enter Original Price" class="form-control mb-2"> 
+                                                    <input type="number" required name="original_price" value="<?= $data['original_price']; ?>" placeholder="Enter Original Price" class="form-control mb-2"> 
                                                 </div>                               
                                                 <div class="col-md-6">
                                                 <br>
                                                     <label class="mb-0"><b>Giá sau khi giảm</b></label>
-                                                    <input type="text" name="selling_price" value="<?= $data['selling_price']; ?>"  placeholder="Enter Selling Price" class="form-control mb-2">
+                                                    <input type="number" name="selling_price" value="<?= $data['selling_price']; ?>"  placeholder="Enter Selling Price" class="form-control mb-2">
                                                 </div>                              
                                                 <div class="col-md-12">
                                                 <br>

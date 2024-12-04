@@ -44,7 +44,7 @@ if(isset($_POST['verify_email_btn'])){
             echo "Không thể gửi tin nhắn. Mailer Error: {$mail->ErrorInfo}";
         }
     } else {
-        redirect("../forgot-password.php", "Email không hợp lệ !");;
+        redirect("../forgot-password.php", "Email không tồn tại !");;
     }
 }
 if(isset($_POST['verify_otp_btn'])){
